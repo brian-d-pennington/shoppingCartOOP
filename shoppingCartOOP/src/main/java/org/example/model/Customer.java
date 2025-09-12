@@ -1,4 +1,32 @@
 package org.example.model;
 
 public class Customer {
+    private String name;
+    private double funds;
+
+    public Customer(String name, double funds) {
+        this.name = name;
+        this.funds = funds;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getFunds() {
+        return funds;
+    }
+
+    public void setFunds(double funds) {
+        this.funds = funds;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Hi %s! You have %.2f remaining", name, funds);
+    }
 }
