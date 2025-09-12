@@ -30,7 +30,7 @@ public class MenuController {
             //display cart
                 case 1: items = shoppingCart.getCustomerItems(customer);
                     for (Item item : items){
-                        ui.displayMessage(item.toString());
+                        ui.displayMessage(item.getName()+ " : $" +item.getPrice());
                     }
                     break;
 
