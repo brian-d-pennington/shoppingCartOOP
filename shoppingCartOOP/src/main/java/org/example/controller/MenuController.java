@@ -1,12 +1,17 @@
 package org.example.controller;
 
+import org.example.model.Customer;
+import org.example.model.Item;
 import org.example.service.ShoppingCart;
 import org.example.view.ConsoleUI;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuController {
     private ShoppingCart shoppingCart;
     private ConsoleUI ui;
+    Customer customer;
     Scanner scanner = new Scanner(System.in);
 
     public MenuController(ShoppingCart shoppingCart, ConsoleUI ui) {
@@ -21,8 +26,10 @@ public class MenuController {
             int choice = ui.displayMenu();
             switch (choice) {
             //display cart
-                case 1:
-
+                case 1: List<Item> items = shoppingCart.getCustomerItems(customer);
+                    for (Item item : items){
+                        ui.displayMessage(item.toString());
+                    }
                     break;
 
             //remove an item  - display cart, allow user to select what/how many to remove
