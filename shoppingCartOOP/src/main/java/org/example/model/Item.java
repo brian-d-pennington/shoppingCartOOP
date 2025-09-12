@@ -1,6 +1,6 @@
 package org.example.model;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class Item {
     String name;
@@ -25,5 +25,10 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s  $%.2f", name, price);
     }
 }
