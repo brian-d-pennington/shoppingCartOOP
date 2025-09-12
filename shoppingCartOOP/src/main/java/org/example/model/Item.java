@@ -33,4 +33,15 @@ public class Item {
     public Double getPrice(String name) {
         return items.get(name);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Double> entry : items.entrySet()) {
+            String name = entry.getKey();
+            Double price = entry.getValue();
+            sb.append(String.format("- %s: %.2f%n", name, price));
+        }
+        return sb.toString();
+    }
 }
