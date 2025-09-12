@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class ConsoleUI{
 
     Scanner scanner = new Scanner(System.in);
-    NumberFormat currency = NumberFormat.getCurrencyInstance();
     int answer;
 
     public double getDouble(String prompt) {
@@ -33,14 +32,6 @@ public class ConsoleUI{
 
     public void displayPrompt(String prompt) {
         System.out.print(prompt + ": ");
-    }
-
-    public void hitEnterToContinue() {
-        scanner.nextLine();
-    }
-
-    public String asCurrency(double money) {
-        return currency.format(money);
     }
 
     public int displayMenu() {
