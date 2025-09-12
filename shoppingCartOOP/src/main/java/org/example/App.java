@@ -9,15 +9,18 @@ import org.example.view.ConsoleUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class App
 {
     public static void main( String[] args )
     {
         Customer customer = new Customer("Bill", 200.00);
-        List<Item> customerItems = new ArrayList<>();
+        Item item = new Item();
+        List<Item> itemList = new ArrayList<>();
+        itemList.add(item); // test populate
         ConsoleUI ui = new ConsoleUI();
-        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, customerItems);
+        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, itemList);
         MenuController menuController = new MenuController(shoppingCart, ui);
         menuController.run();
     }

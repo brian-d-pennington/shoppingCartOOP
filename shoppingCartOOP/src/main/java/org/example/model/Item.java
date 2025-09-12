@@ -1,5 +1,6 @@
 package org.example.model;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Item {
@@ -16,7 +17,7 @@ public class Item {
         seedDefaults();
     }
 
-    private void seedDefaults() {
+    public void seedDefaults() {
         this.items.put("hersey", 2.00);
         this.items.put("kitkat", 3.20);
         this.items.put("milkyway", 2.75);

@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class MenuController {
     private ShoppingCart shoppingCart;
-    private ConsoleUI ui;
+    private ConsoleUI ui = new ConsoleUI();
     Customer customer;
     Scanner scanner = new Scanner(System.in);
+    List<Item> items;
 
     public MenuController(ShoppingCart shoppingCart, ConsoleUI ui) {
         this.shoppingCart = shoppingCart;
@@ -26,7 +27,7 @@ public class MenuController {
             int choice = ui.displayMenu();
             switch (choice) {
             //display cart
-                case 1: List<Item> items = shoppingCart.getCustomerItems(customer);
+                case 1: items = shoppingCart.getCustomerItems(customer);
                     for (Item item : items){
                         ui.displayMessage(item.toString());
                     }
@@ -38,8 +39,11 @@ public class MenuController {
                     break;
 
             //add an item
-                case 3: // The user can add and remove as many items to the cart as they wish.
+                case 3: // The user can add items to the cart as they wish.
 
+                    // display items
+                    Item thisItem = dis
+                    shoppingCart.customerAddItem(customer, Item);
                     break;
 
             //checkout
