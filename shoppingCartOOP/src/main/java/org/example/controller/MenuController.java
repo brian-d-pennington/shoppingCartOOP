@@ -18,6 +18,7 @@ public class MenuController {
     Util util = new Util();
     List<Item> displayItems = new ArrayList<>();
     Menu menu = new Menu();
+    int thisItem;
 
     public MenuController(ShoppingCart shoppingCart, ConsoleUI ui, Customer customer) {
         this.shoppingCart = shoppingCart;
@@ -53,14 +54,14 @@ public class MenuController {
                     } else {
                         itemsToChooseFrom(currentCart);
                     }
-                    int thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
+                    thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
                     shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
                     break;
 
             //add an item
                 case 3: // The user can add items to the cart as they wish.
                     itemsToChooseFrom(displayItems);
-                    int thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
+                    thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
                     break;
 
