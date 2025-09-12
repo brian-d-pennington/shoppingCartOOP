@@ -14,8 +14,9 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     public ShoppingCartImpl(Customer customer, List<Item> customerItems) {
         this.customer = customer;
-        this.customerItems = customerItems;
+        this.customerItems = customerItems; // redundant?
         shoppingCart = new HashMap<>();
+        shoppingCart.put(customer,customerItems); // check?
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     @Override
     public Map<Customer,List<Item>> customerAddItem(Customer customer, Item item) {
-        customerItems = getItemsByCustomer(customer);
+        customerItems = getCustomerItems(customer);
         customerItems.add(item);
         shoppingCart.put(customer, customerItems);
         return shoppingCart;
@@ -33,7 +34,7 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     @Override
     public Map<Customer,List<Item>> customerRemoveItem(Customer customer, Item item) {
-        customerItems = getItemsByCustomer(customer);
+        customerItems = getCustomerItems(customer);
         customerItems.remove(item);
         shoppingCart.put(customer, customerItems);
         return shoppingCart;
@@ -43,8 +44,4 @@ public class ShoppingCartImpl implements ShoppingCart {
 //
 //    }
 
-    public List<Item> getItemsByCustomer(Customer customer){
-        return shoppingCart.get(customer);
-
-    }
 }
