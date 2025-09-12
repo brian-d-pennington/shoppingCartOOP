@@ -42,8 +42,8 @@ public class MenuController {
                 case 3: // The user can add items to the cart as they wish.
 
                     // display items
-                    Item thisItem = dis
-                    shoppingCart.customerAddItem(customer, Item);
+//                    Item thisItem = dis
+//                    shoppingCart.customerAddItem(customer, Item);
                     break;
 
             //checkout

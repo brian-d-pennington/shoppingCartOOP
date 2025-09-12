@@ -17,10 +17,8 @@ public class App
     {
         Customer customer = new Customer("Bill", 200.00);
         Item item = new Item();
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(item); // test populate
         ConsoleUI ui = new ConsoleUI();
-        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, itemList);
+        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, );
         MenuController menuController = new MenuController(shoppingCart, ui);
         menuController.run();
     }
