@@ -24,6 +24,7 @@ public class ShoppingCartImpl implements ShoppingCart {
         return shoppingCart.get(customer);
     }
 
+    @Override
     public Map<Customer,List<Item>> customerAddItem(Customer customer, Item item) {
         customerItems = getCustomerItems(customer);
         customerItems.add(item);

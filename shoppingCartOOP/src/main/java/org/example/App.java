@@ -9,22 +9,17 @@ import org.example.view.ConsoleUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class App
 {
     public static void main( String[] args )
     {
         Customer customer = new Customer("Bill", 200.00);
-        List<Item> customerItems = new ArrayList<>();
-        Item hersey = new Item("Hersey",2.00);
-        Item kitkat = new Item("Kitkat",2.50);
-        Item milkway = new Item("MilkyWay",2.50);
-        Item candyCorn = new Item("CandyCorn",0.50);
-        customerItems.add(milkway);
-        customerItems.add(hersey);
+        Item item = new Item();
         ConsoleUI ui = new ConsoleUI();
-        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, customerItems);
-        MenuController menuController = new MenuController(shoppingCart, ui,customer);
+        ShoppingCart shoppingCart = new ShoppingCartImpl(customer, );
+        MenuController menuController = new MenuController(shoppingCart, ui);
         menuController.run();
     }
 }
