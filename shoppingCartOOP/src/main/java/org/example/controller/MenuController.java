@@ -35,21 +35,31 @@ public class MenuController {
             //display cart
                 case 1: items = shoppingCart.getCustomerItems(customer);
                     if (items.isEmpty()){
-                        ui.displayMessage("You haven't added any items yet");
+                        ui.displayMessage("You haven't added any items yet.");
+                    } else {
+                        ui.displayMessage("Currently in your shopping cart:");
+                        for (Item item : items){
+                            ui.displayMessage(item.getName()+ " : $" +item.getPrice());
+                        }
                     }
-                    for (Item item : items){
-                        ui.displayMessage(item.getName()+ " : $" +item.getPrice());
-                    }
+
                     break;
 
             //remove an item  - display cart, allow user to select what/how many to remove
-                case 2: //Only remove an item from the cart when the quantity for that item is zero.
-
+                case 2: List<Item> currentCart = shoppingCart.getCustomerItems(customer);
+                int cartSize = currentCart.size();
+                if (currentCart.isEmpty()) {
+                        ui.displayMessage("You don't have any items to remove.");
+                    } else {
+                        itemsToChooseFrom(currentCart);
+                    }
+                    int thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
+                    shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
                     break;
 
             //add an item
                 case 3: // The user can add items to the cart as they wish.
-                    itemsToChooseFrom();
+                    itemsToChooseFrom(displayItems);
                     int thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
                     break;
@@ -67,9 +77,9 @@ public class MenuController {
         }
     }
 
-    public void itemsToChooseFrom() {
-        for (int i = 0; i < displayItems.size(); i++) {
-            System.out.println(i + 1 + ": " + displayItems.get(i));
+    public void itemsToChooseFrom(List<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(i + 1 + ": " + items.get(i));
         }
     }
 
