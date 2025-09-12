@@ -31,7 +31,7 @@ public class Util {
             if (choice >= rangeStart && choice <= rangeEnd) {
                 return choice;
             }
-            System.out.println("Please enter a number between 1-100 only");
+            System.out.println("Please enter a number between " +rangeStart+ " and " +rangeEnd+ " only");
         }
     }
 
