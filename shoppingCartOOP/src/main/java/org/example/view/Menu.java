@@ -1,5 +1,5 @@
 package org.example.view;
 
-public class ConsoleUI {
+public class Menu {
 
 }

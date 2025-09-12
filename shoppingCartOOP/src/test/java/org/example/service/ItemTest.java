@@ -1,6 +1,4 @@
 package org.example.service;
 
-
-class Test {
-
+public class ItemTest {
 }
