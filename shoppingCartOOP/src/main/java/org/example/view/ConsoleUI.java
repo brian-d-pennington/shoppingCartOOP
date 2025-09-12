@@ -7,6 +7,7 @@ public class ConsoleUI{
 
     Scanner scanner = new Scanner(System.in);
     NumberFormat currency = NumberFormat.getCurrencyInstance();
+    int answer;
 
     public double getDouble(String prompt) {
         boolean running = true;
@@ -42,11 +43,10 @@ public class ConsoleUI{
         return currency.format(money);
     }
 
-    public String displayMenu() {
+    public int displayMenu() {
         displayMessage("Welcome to the Shopping Cart! ");
         //displayMessage("Available Money:  " + asCurrency(shoppingCart.getCustomerMoney()));
         displayMessage("");
-        int answer;
         boolean menuRunning = true;
         while (menuRunning) {
             displayMessage("1. Display Cart" +
