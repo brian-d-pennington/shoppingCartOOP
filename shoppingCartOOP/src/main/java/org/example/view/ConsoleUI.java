@@ -48,6 +48,7 @@ public class ConsoleUI{
                     "\n4. Checkout" +
                     "\n5. Exit");
             answer = util.promptUserForIntInRange("Enter a Number", 1, 5);
+            menuRunning = false;
         }
         return answer;
     }
