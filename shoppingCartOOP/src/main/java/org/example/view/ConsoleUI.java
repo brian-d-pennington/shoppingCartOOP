@@ -37,9 +37,7 @@ public class ConsoleUI{
     }
 
     public int displayMenu() {
-        displayMessage("Welcome to the Shopping Cart! ");
-        //displayMessage("Available Money:  " + asCurrency(shoppingCart.getCustomerMoney()));
-        displayMessage("");
+
         boolean menuRunning = true;
         while (menuRunning) {
             displayMessage("1. Display Cart" +
@@ -48,6 +46,7 @@ public class ConsoleUI{
                     "\n4. Checkout" +
                     "\n5. Exit");
             answer = util.promptUserForIntInRange("Enter a Number", 1, 5);
+            menuRunning = false;
         }
         return answer;
     }

@@ -15,6 +15,7 @@ public class App
 {
     public static void main( String[] args )
     {
+        System.out.println("Welcome to the Shopping Cart! ");
         Customer customer = new Customer("Bill", 200.00);
         List<Item> customerItems = new ArrayList<>();
         Item hersey = new Item("Hersey",2.00);
