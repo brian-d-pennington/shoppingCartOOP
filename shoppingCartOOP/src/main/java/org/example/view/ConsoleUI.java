@@ -37,7 +37,6 @@ public class ConsoleUI{
     }
 
     public int displayMenu() {
-        displayMessage("Welcome to the Shopping Cart! ");
         //displayMessage("Available Money:  " + asCurrency(shoppingCart.getCustomerMoney()));
         displayMessage("");
         boolean menuRunning = true;
