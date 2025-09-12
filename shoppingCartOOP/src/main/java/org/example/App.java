@@ -16,9 +16,15 @@ public class App
     {
         Customer customer = new Customer("Bill", 200.00);
         List<Item> customerItems = new ArrayList<>();
+        Item hersey = new Item("Hersey",2.00);
+        Item kitkat = new Item("Kitkat",2.50);
+        Item milkway = new Item("MilkyWay",2.50);
+        Item candyCorn = new Item("CandyCorn",0.50);
+        customerItems.add(milkway);
+        customerItems.add(hersey);
         ConsoleUI ui = new ConsoleUI();
         ShoppingCart shoppingCart = new ShoppingCartImpl(customer, customerItems);
-        MenuController menuController = new MenuController(shoppingCart, ui);
+        MenuController menuController = new MenuController(shoppingCart, ui,customer);
         menuController.run();
     }
 }

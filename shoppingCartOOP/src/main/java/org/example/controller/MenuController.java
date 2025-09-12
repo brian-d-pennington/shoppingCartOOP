@@ -14,9 +14,10 @@ public class MenuController {
     Customer customer;
     Scanner scanner = new Scanner(System.in);
 
-    public MenuController(ShoppingCart shoppingCart, ConsoleUI ui) {
+    public MenuController(ShoppingCart shoppingCart, ConsoleUI ui, Customer customer) {
         this.shoppingCart = shoppingCart;
         this.ui = ui;
+        this.customer = customer;
     }
 
     public void run() {
