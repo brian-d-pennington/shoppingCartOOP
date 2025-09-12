@@ -1,10 +1,12 @@
 package org.example.view;
 
+import org.example.utils.Util;
+
 import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class ConsoleUI{
-
+    Util util = new Util();
     Scanner scanner = new Scanner(System.in);
     int answer;
 
@@ -45,12 +47,7 @@ public class ConsoleUI{
                     "\n3. Add an Item" +
                     "\n4. Checkout" +
                     "\n5. Exit");
-            answer = Integer.parseInt(scanner.nextLine());
-            if (answer != 1 && answer != 2 && answer != 3 && answer != 4 && answer != 5) {
-                displayMessage("Invalid Entry. Please Try Again.");
-            } else {
-                menuRunning = false;
-            }
+            answer = util.promptUserForIntInRange("Enter a Number", 1, 5);
         }
         return answer;
     }
