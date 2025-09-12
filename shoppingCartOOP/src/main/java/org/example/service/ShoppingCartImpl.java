@@ -18,21 +18,33 @@ public class ShoppingCartImpl implements ShoppingCart {
         shoppingCart = new HashMap<>();
     }
 
+    @Override
     public List<Item> getCustomerItems(Customer customer) {
         return shoppingCart.get(customer);
     }
 
+    @Override
     public Map<Customer,List<Item>> customerAddItem(Customer customer, Item item) {
-        List<Item> customerItems = shoppingCart.get(customer);
+        customerItems = getItemsByCustomer(customer);
         customerItems.add(item);
         shoppingCart.put(customer, customerItems);
         return shoppingCart;
     }
 
+    @Override
     public Map<Customer,List<Item>> customerRemoveItem(Customer customer, Item item) {
-        List<Item> customerItems = shoppingCart.get(customer);
+        customerItems = getItemsByCustomer(customer);
         customerItems.remove(item);
         shoppingCart.put(customer, customerItems);
         return shoppingCart;
+    }
+
+//    public double calculateTotalPrice(){
+//
+//    }
+
+    public List<Item> getItemsByCustomer(Customer customer){
+        return shoppingCart.get(customer);
+
     }
 }
