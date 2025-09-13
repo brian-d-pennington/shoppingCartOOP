@@ -61,7 +61,10 @@ public class MenuController {
             //add an item - The user can add items to the cart as they wish.
                 case 3: itemsToChooseFrom(displayItems);
                     thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
+                    // if else logic to check for enough money
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
+                    double itemPrice = displayItems.get(thisItem - 1).getPrice();
+                    customer.setFunds(customer.getFunds() - itemPrice);
                     break;
 
             //checkout - calculate total, and if Customer has sufficient funds, complete transaction
@@ -76,7 +79,7 @@ public class MenuController {
                         sufficientFunds = customer.customerSufficientFunds(total);
                         if (sufficientFunds) {
                             customer.updateFundsAfterSale(total);
-                            ui.displayMessage("Thank you for your purchase! You now have $" + util.roundMoneyTwoDecimals(customer.getFunds()));
+                            ui.displayMessage("Thank you for your purchase " + customer.getName() + "! You now have $" + util.roundMoneyTwoDecimals(customer.getFunds()));
                             shoppingCart.clearShoppingCart(customer);
                         } else {
                             ui.displayMessage("You do not have enough funds. Please remove some items from your cart.");

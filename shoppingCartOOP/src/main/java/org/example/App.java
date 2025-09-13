@@ -15,12 +15,12 @@ public class App
 {
     public static void main( String[] args )
     {
-        Customer customer = new Customer("Bill", 200.00); // create user input
         List<Item> customerItems = new ArrayList<>();
         ConsoleUI ui = new ConsoleUI();
+        ui.displayMessage("Welcome to the Shopping Cart! ");
+        Customer customer = ui.initializeCustomer();
         ShoppingCart shoppingCart = new ShoppingCartImpl(customer, customerItems);
         MenuController menuController = new MenuController(shoppingCart, ui,customer);
-        ui.displayMessage("Welcome to the Shopping Cart! ");
         menuController.run();
     }
 }

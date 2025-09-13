@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.model.Customer;
 import org.example.utils.Util;
 
 import java.text.NumberFormat;
@@ -9,6 +10,7 @@ public class ConsoleUI{
     Util util = new Util();
     Scanner scanner = new Scanner(System.in);
     int answer;
+    Customer customer;
 
     public double getDouble(String prompt) {
         boolean running = true;
@@ -37,7 +39,7 @@ public class ConsoleUI{
     }
 
     public int displayMenu() {
-        //displayMessage("Available Money:  " + asCurrency(shoppingCart.getCustomerMoney()));
+        displayMessage("Available Money: $" + customer.getFunds());
         displayMessage("");
         boolean menuRunning = true;
         while (menuRunning) {
@@ -52,6 +54,12 @@ public class ConsoleUI{
         return answer;
     }
 
-
+    public Customer initializeCustomer() {
+        displayMessage("What is the customer's name?");
+        String customerName = scanner.nextLine();
+        double funds = getDouble("How much money do they have to spend?");
+        customer = new Customer(customerName,funds);
+        return customer;
+    }
 }
 
