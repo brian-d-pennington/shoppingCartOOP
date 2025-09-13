@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.model.Customer;
 import org.example.model.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,9 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     public ShoppingCartImpl(Customer customer, List<Item> customerItems) {
         this.customer = customer;
-        this.customerItems = customerItems; // redundant?
+        this.customerItems = customerItems;
         shoppingCart = new HashMap<>();
-        shoppingCart.put(customer,customerItems); // check?
+        shoppingCart.put(customer,customerItems);
     }
 
     @Override
@@ -40,8 +41,22 @@ public class ShoppingCartImpl implements ShoppingCart {
         return shoppingCart;
     }
 
-//    public double calculateTotalPrice(){
-//
-//    }
+    @Override
+    public double calculateTotalPrice(List<Item> list){
+        double sum = 0;
+        for (Item i : list) {
+            sum += i.getPrice();
+        }
+        return sum;
+    }
 
+    @Override
+    public Map<Customer,List<Item>> clearShoppingCart(Customer customer) {
+        // need to clear Customer's HashMap without leaving it null
+        shoppingCart.clear();
+        shoppingCart = new HashMap<>();
+        List<Item> clearCart = new ArrayList<>();
+        shoppingCart.put(customer, clearCart);
+        return shoppingCart;
+    }
 }

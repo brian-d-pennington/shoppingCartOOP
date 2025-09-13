@@ -19,6 +19,7 @@ public class MenuController {
     List<Item> displayItems = new ArrayList<>();
     Menu menu = new Menu();
     int thisItem;
+    List<Item> currentCart;
 
     public MenuController(ShoppingCart shoppingCart, ConsoleUI ui, Customer customer) {
         this.shoppingCart = shoppingCart;
@@ -43,31 +44,46 @@ public class MenuController {
                             ui.displayMessage(item.getName()+ " : $" +item.getPrice());
                         }
                     }
-
                     break;
 
             //remove an item  - display cart, allow user to select what/how many to remove
-                case 2: List<Item> currentCart = shoppingCart.getCustomerItems(customer);
+                case 2: currentCart = shoppingCart.getCustomerItems(customer);
                 int cartSize = currentCart.size();
                 if (currentCart.isEmpty()) {
                         ui.displayMessage("You don't have any items to remove.");
                     } else {
                         itemsToChooseFrom(currentCart);
+                        thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
+                        shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
                     }
-                    thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
-                    shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
                     break;
 
-            //add an item
-                case 3: // The user can add items to the cart as they wish.
-                    itemsToChooseFrom(displayItems);
+            //add an item - The user can add items to the cart as they wish.
+                case 3: itemsToChooseFrom(displayItems);
                     thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
                     break;
 
-            //checkout
-                case 4: //When the user checks out, empty their cart and display the total amount due.
-
+            //checkout - calculate total, and if Customer has sufficient funds, complete transaction
+                case 4: currentCart = shoppingCart.getCustomerItems(customer);
+                    ui.displayMessage("The total for your current items:");
+                    itemsToChooseFrom(currentCart);
+                    double total = util.roundMoneyTwoDecimals(shoppingCart.calculateTotalPrice(currentCart));
+                    ui.displayMessage("is $" + total);
+                    boolean confirmSale = util.promptUserForYN("Would you like to complete the transaction? Y/N");
+                    boolean sufficientFunds;
+                    if (confirmSale) {
+                        sufficientFunds = customer.customerSufficientFunds(total);
+                        if (sufficientFunds) {
+                            customer.updateFundsAfterSale(total);
+                            ui.displayMessage("Thank you for your purchase! You now have $" + util.roundMoneyTwoDecimals(customer.getFunds()));
+                            shoppingCart.clearShoppingCart(customer);
+                        } else {
+                            ui.displayMessage("You do not have enough funds. Please remove some items from your cart.");
+                        }
+                    } else {
+                        ui.displayMessage("Ok. Please continue shopping then.");
+                    }
                     break;
 
             //exit
@@ -83,5 +99,4 @@ public class MenuController {
             System.out.println(i + 1 + ": " + items.get(i));
         }
     }
-
 }

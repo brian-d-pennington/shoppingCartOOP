@@ -25,6 +25,18 @@ public class Customer {
         this.funds = funds;
     }
 
+    public boolean customerSufficientFunds(double checkoutTotal) {
+        if (checkoutTotal <= funds) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void updateFundsAfterSale(double checkoutTotal) {
+        funds -= checkoutTotal;
+    }
+
     @Override
     public String toString() {
         return String.format("Hi %s! You have %.2f remaining", name, funds);
