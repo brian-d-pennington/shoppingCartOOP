@@ -40,7 +40,7 @@ public class ConsoleUI{
 
     public int displayMenu() {
         displayMessage("");
-        displayMessage("Available Money: $" + customer.getFundsForDisplay()); // displays funds for customer convenience
+        displayMessage(String.format("Available funds: $%.2f",util.roundMoneyTwoDecimals(customer.getFundsForDisplay()))); // displays funds for customer convenience
         displayMessage("");
         boolean menuRunning = true;
         while (menuRunning) {

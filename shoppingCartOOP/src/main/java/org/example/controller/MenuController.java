@@ -47,7 +47,7 @@ public class MenuController {
                     } else {
                         ui.displayMessage("Currently in your shopping cart:");
                         for (Item item : items){
-                            ui.displayMessage(item.getName()+ " : $" +item.getPrice());
+                            ui.displayMessage(String.format(item.getName()+": $%.2f",item.getPrice()));
                         }
                     }
                     break;
@@ -64,8 +64,8 @@ public class MenuController {
                     } else {
                         itemsToChooseFrom(currentCart);
                         thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
+                        double itemPrice = currentCart.get(thisItem - 1).getPrice();
                         shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
-                        double itemPrice = displayItems.get(thisItem - 1).getPrice();
                         customer.setFundsForDisplay(customer.getFundsForDisplay() + itemPrice);
                     }
                 break;
@@ -74,12 +74,12 @@ public class MenuController {
                 case 3: itemsToChooseFrom(displayItems);
                     thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
+                    double itemPrice = displayItems.get(thisItem - 1).getPrice();
+                    customer.setFundsForDisplay(customer.getFundsForDisplay() - itemPrice);
                     if (customer.getFundsForDisplay() < 0) {
                         System.out.println("WARNING! You do not have enough $ to complete this purchase.");
                         // prompt to add money or suggest removing items
                     }
-                    double itemPrice = displayItems.get(thisItem - 1).getPrice();
-                    customer.setFundsForDisplay(customer.getFundsForDisplay() - itemPrice);
                     break;
 
             //checkout - calculate total, and if Customer has sufficient funds, complete transaction
@@ -88,17 +88,17 @@ public class MenuController {
                 } catch (IllegalFormatException e) {
                     System.out.println(e); // handles null or corrupted data object
                 }
-                    ui.displayMessage("The total for your current items");
+                    ui.displayMessage("The total for your current items:");
                     itemsToChooseFrom(currentCart);
                     double total = util.roundMoneyTwoDecimals(shoppingCart.calculateTotalPrice(currentCart));
-                    ui.displayMessage("is $" + total);
+                    ui.displayMessage(String.format("is $%.2f",total));
                     boolean confirmSale = util.promptUserForYN("Would you like to complete the transaction? Y/N");
                     boolean sufficientFunds;
                     if (confirmSale) {
                         sufficientFunds = customer.customerSufficientFunds(total);
                         if (sufficientFunds) {
                             customer.updateFundsAfterSale(total);
-                            ui.displayMessage("Thank you for your purchase " + customer.getName() + "! You now have $" + util.roundMoneyTwoDecimals(customer.getFunds()));
+                            ui.displayMessage("Thank you for your purchase " + customer.getName() + "!");
                             shoppingCart.clearShoppingCart(customer);
                         } else {
                             ui.displayMessage("You do not have enough funds. Please remove some items from your cart.");
@@ -111,6 +111,7 @@ public class MenuController {
             //exit
                 case 5:
                     running = false;
+                    ui.displayMessage("Thank you for your business, " + customer.getName() + "!");
                     break;
             }
         }
