@@ -7,7 +7,9 @@ import org.example.utils.Util;
 import org.example.view.ConsoleUI;
 import org.example.view.Menu;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 
 public class MenuController {
@@ -35,7 +37,11 @@ public class MenuController {
             int choice = ui.displayMenu();
             switch (choice) {
             //display cart
-                case 1: items = shoppingCart.getCustomerItems(customer);
+                case 1: try {
+                    items = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
                     if (items.isEmpty()){
                         ui.displayMessage("You haven't added any items yet.");
                     } else {
@@ -47,29 +53,42 @@ public class MenuController {
                     break;
 
             //remove an item  - display cart, allow user to select what/how many to remove
-                case 2: currentCart = shoppingCart.getCustomerItems(customer);
-                int cartSize = currentCart.size();
-                if (currentCart.isEmpty()) {
+                case 2: try {
+                    currentCart = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
+                    int cartSize = currentCart.size();
+                    if (currentCart.isEmpty()) {
                         ui.displayMessage("You don't have any items to remove.");
                     } else {
                         itemsToChooseFrom(currentCart);
                         thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
                         shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
+                        double itemPrice = displayItems.get(thisItem - 1).getPrice();
+                        customer.setFundsForDisplay(customer.getFundsForDisplay() + itemPrice);
                     }
-                    break;
+                break;
 
             //add an item - The user can add items to the cart as they wish.
                 case 3: itemsToChooseFrom(displayItems);
                     thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
-                    // if else logic to check for enough money
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
+                    if (customer.getFundsForDisplay() < 0) {
+                        System.out.println("WARNING! You do not have enough $ to complete this purchase.");
+                        // prompt to add money or suggest removing items
+                    }
                     double itemPrice = displayItems.get(thisItem - 1).getPrice();
-                    customer.setFunds(customer.getFunds() - itemPrice);
+                    customer.setFundsForDisplay(customer.getFundsForDisplay() - itemPrice);
                     break;
 
             //checkout - calculate total, and if Customer has sufficient funds, complete transaction
-                case 4: currentCart = shoppingCart.getCustomerItems(customer);
-                    ui.displayMessage("The total for your current items:");
+                case 4: try {
+                    currentCart = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
+                    ui.displayMessage("The total for your current items");
                     itemsToChooseFrom(currentCart);
                     double total = util.roundMoneyTwoDecimals(shoppingCart.calculateTotalPrice(currentCart));
                     ui.displayMessage("is $" + total);

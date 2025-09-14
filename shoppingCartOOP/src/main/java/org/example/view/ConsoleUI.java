@@ -39,7 +39,8 @@ public class ConsoleUI{
     }
 
     public int displayMenu() {
-        displayMessage("Available Money: $" + customer.getFunds());
+        displayMessage("");
+        displayMessage("Available Money: $" + customer.getFundsForDisplay()); // displays funds for customer convenience
         displayMessage("");
         boolean menuRunning = true;
         while (menuRunning) {
@@ -59,6 +60,7 @@ public class ConsoleUI{
         String customerName = scanner.nextLine();
         double funds = getDouble("How much money do they have to spend?");
         customer = new Customer(customerName,funds);
+        customer.setFundsForDisplay(funds);
         return customer;
     }
 }

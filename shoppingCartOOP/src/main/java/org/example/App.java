@@ -17,7 +17,7 @@ public class App
     {
         List<Item> customerItems = new ArrayList<>();
         ConsoleUI ui = new ConsoleUI();
-        ui.displayMessage("Welcome to the Shopping Cart! ");
+        ui.displayMessage("Welcome to the Candy Store!");
         Customer customer = ui.initializeCustomer();
         ShoppingCart shoppingCart = new ShoppingCartImpl(customer, customerItems);
         MenuController menuController = new MenuController(shoppingCart, ui,customer);

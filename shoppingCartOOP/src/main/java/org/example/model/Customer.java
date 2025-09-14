@@ -25,6 +25,14 @@ public class Customer {
         this.funds = funds;
     }
 
+    public double getFundsForDisplay() {
+        return funds;
+    } // display fund amount needs to be separate
+
+    public void setFundsForDisplay(double funds) {
+        this.funds = funds;
+    }
+
     public boolean customerSufficientFunds(double checkoutTotal) {
         if (checkoutTotal <= funds) {
             return true;
