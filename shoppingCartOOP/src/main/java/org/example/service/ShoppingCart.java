@@ -10,4 +10,6 @@ public interface ShoppingCart {
     public List<Item> getCustomerItems(Customer customer);
     public Map<Customer,List<Item>> customerAddItem(Customer customer, Item item);
     public Map<Customer,List<Item>> customerRemoveItem(Customer customer, Item item);
+    public double calculateTotalPrice(List<Item> list);
+    public Map<Customer,List<Item>> clearShoppingCart(Customer customer);
 }

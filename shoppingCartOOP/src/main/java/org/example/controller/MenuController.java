@@ -7,7 +7,9 @@ import org.example.utils.Util;
 import org.example.view.ConsoleUI;
 import org.example.view.Menu;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 
 public class MenuController {
@@ -18,6 +20,8 @@ public class MenuController {
     Util util = new Util();
     List<Item> displayItems = new ArrayList<>();
     Menu menu = new Menu();
+    int thisItem;
+    List<Item> currentCart;
 
     public MenuController(ShoppingCart shoppingCart, ConsoleUI ui, Customer customer) {
         this.shoppingCart = shoppingCart;
@@ -33,45 +37,81 @@ public class MenuController {
             int choice = ui.displayMenu();
             switch (choice) {
             //display cart
-                case 1: items = shoppingCart.getCustomerItems(customer);
+                case 1: try {
+                    items = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
                     if (items.isEmpty()){
                         ui.displayMessage("You haven't added any items yet.");
                     } else {
                         ui.displayMessage("Currently in your shopping cart:");
                         for (Item item : items){
-                            ui.displayMessage(item.getName()+ " : $" +item.getPrice());
+                            ui.displayMessage(String.format(item.getName()+": $%.2f",item.getPrice()));
                         }
                     }
-
                     break;
 
             //remove an item  - display cart, allow user to select what/how many to remove
-                case 2: List<Item> currentCart = shoppingCart.getCustomerItems(customer);
-                int cartSize = currentCart.size();
-                if (currentCart.isEmpty()) {
+                case 2: try {
+                    currentCart = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
+                    int cartSize = currentCart.size();
+                    if (currentCart.isEmpty()) {
                         ui.displayMessage("You don't have any items to remove.");
                     } else {
                         itemsToChooseFrom(currentCart);
+                        thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
+                        double itemPrice = currentCart.get(thisItem - 1).getPrice();
+                        shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
+                        customer.setFundsForDisplay(customer.getFundsForDisplay() + itemPrice);
                     }
-                    int thisItem = util.promptUserForIntInRange("Select which item to remove:", 1, cartSize+1);
-                    shoppingCart.customerRemoveItem(customer, currentCart.get(thisItem-1));
-                    break;
+                break;
 
-            //add an item
-                case 3: // The user can add items to the cart as they wish.
-                    itemsToChooseFrom(displayItems);
-                    int thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
+            //add an item - The user can add items to the cart as they wish.
+                case 3: itemsToChooseFrom(displayItems);
+                    thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
+                    double itemPrice = displayItems.get(thisItem - 1).getPrice();
+                    customer.setFundsForDisplay(customer.getFundsForDisplay() - itemPrice);
+                    if (customer.getFundsForDisplay() < 0) {
+                        System.out.println("WARNING! You do not have enough $ to complete this purchase.");
+                        // prompt to add money or suggest removing items
+                    }
                     break;
 
-            //checkout
-                case 4: //When the user checks out, empty their cart and display the total amount due.
-
+            //checkout - calculate total, and if Customer has sufficient funds, complete transaction
+                case 4: try {
+                    currentCart = shoppingCart.getCustomerItems(customer);
+                } catch (IllegalFormatException e) {
+                    System.out.println(e); // handles null or corrupted data object
+                }
+                    ui.displayMessage("The total for your current items:");
+                    itemsToChooseFrom(currentCart);
+                    double total = util.roundMoneyTwoDecimals(shoppingCart.calculateTotalPrice(currentCart));
+                    ui.displayMessage(String.format("is $%.2f",total));
+                    boolean confirmSale = util.promptUserForYN("Would you like to complete the transaction? Y/N");
+                    boolean sufficientFunds;
+                    if (confirmSale) {
+                        sufficientFunds = customer.customerSufficientFunds(total);
+                        if (sufficientFunds) {
+                            customer.updateFundsAfterSale(total);
+                            ui.displayMessage("Thank you for your purchase " + customer.getName() + "!");
+                            shoppingCart.clearShoppingCart(customer);
+                        } else {
+                            ui.displayMessage("You do not have enough funds. Please remove some items from your cart.");
+                        }
+                    } else {
+                        ui.displayMessage("Ok. Please continue shopping then.");
+                    }
                     break;
 
             //exit
                 case 5:
                     running = false;
+                    ui.displayMessage("Thank you for your business, " + customer.getName() + "!");
                     break;
             }
         }
@@ -82,5 +122,4 @@ public class MenuController {
             System.out.println(i + 1 + ": " + items.get(i));
         }
     }
-
 }
