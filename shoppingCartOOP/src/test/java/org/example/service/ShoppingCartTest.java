@@ -57,21 +57,25 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void customerRemoveItemFromListTest() {
+    public void customerRemoveItemTest() {
         sc.customerRemoveItem(customer, water);
-        int actual = customerItems.indexOf(water);
-        assertEquals(-1, actual);
+        int actual = shoppingCart.get(customer).indexOf(water);
+        assertEquals(-1, actual);  // -1 = index not found; it was removed!
 
     }
-//    public void customerRemoveItemFromShoppingCartTest() {
-//        sc.customerRemoveItem(customer, water);
-//        int actual = customerItems.indexOf(water);
-//        assertEquals(-1, actual);
-//
-//    }
-//
-//
-//    public void calculateTotalPriceTest(){
+
+    @Test
+    public void calculateTotalPriceTest(){
+        double actual = sc.calculateTotalPrice(customerItems);
+        assertEquals(11, actual);
+    }
+
+    @Test
+    public void clearShoppingCartTest(){
+        List<Item> actual = (sc.clearShoppingCart(customer)).get(customer);
+        assertEquals(true, actual.isEmpty());
+
+    }
 
 
 }
