@@ -1,6 +1,5 @@
-package org.example.service;
+package org.example.model;
 
-import org.example.model.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
