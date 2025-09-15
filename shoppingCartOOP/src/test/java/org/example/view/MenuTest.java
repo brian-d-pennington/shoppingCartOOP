@@ -1,7 +1,6 @@
-package org.example.service;
+package org.example.view;
 
 import org.example.model.Item;
-import org.example.view.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
