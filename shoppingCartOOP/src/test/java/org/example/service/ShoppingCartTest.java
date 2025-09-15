@@ -18,6 +18,7 @@ public class ShoppingCartTest {
     List<Item> customerItems = new ArrayList<>();
     ShoppingCartImpl sc;
     Map<Customer, List<Item>> shoppingCart;
+    Item water = new Item("Water", 5.00);
 
 
     @BeforeEach
@@ -26,7 +27,6 @@ public class ShoppingCartTest {
         customerItems.add(new Item("Soda", 2.00));
         customerItems.add(new Item("Beer", 1.00));
         customerItems.add(new Item("Juice", 3.00));
-        Item water = new Item("Water", 5.00);
         customerItems.add(water);
         shoppingCart = new HashMap<>();
         shoppingCart.put(customer,customerItems);
@@ -57,10 +57,18 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void customerRemoveItemTest() {
-        sc.customerRemoveItem(customer, water)
+    public void customerRemoveItemFromListTest() {
+        sc.customerRemoveItem(customer, water);
+        int actual = customerItems.indexOf(water);
+        assertEquals(-1, actual);
 
     }
+//    public void customerRemoveItemFromShoppingCartTest() {
+//        sc.customerRemoveItem(customer, water);
+//        int actual = customerItems.indexOf(water);
+//        assertEquals(-1, actual);
+//
+//    }
 //
 //
 //    public void calculateTotalPriceTest(){
