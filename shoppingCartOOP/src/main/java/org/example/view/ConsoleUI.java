@@ -56,8 +56,7 @@ public class ConsoleUI{
     }
 
     public Customer initializeCustomer() {
-        displayMessage("What is the customer's name?");
-        String customerName = scanner.nextLine();
+        String customerName = util.promptUserForString("What is the customer's name?");
         double funds = getDouble("How much money do they have to spend?");
         customer = new Customer(customerName,funds);
         customer.setFundsForDisplay(funds);

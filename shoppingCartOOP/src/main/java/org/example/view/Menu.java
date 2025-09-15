@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Menu {
     List<Item> displayItems = new ArrayList<>();
-
+    // easy to update and modify candy store item display
     public List<Item> createMenu() {
         displayItems.add(new Item("Hershey Bar", 2.00));
         displayItems.add(new Item("KitKat", 2.50));
