@@ -2,7 +2,6 @@ package org.example.service;
 
 import org.example.model.Customer;
 import org.example.model.Item;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

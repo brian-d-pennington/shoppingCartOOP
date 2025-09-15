@@ -5,11 +5,13 @@ public class Customer {
     private double funds;
     private double fundsToDisplay;
 
+    // constructor method
     public Customer(String name, double funds) {
         this.name = name;
         this.funds = funds;
     }
 
+    //getter and setter methods 
     public String getName() {
         return name;
     }
