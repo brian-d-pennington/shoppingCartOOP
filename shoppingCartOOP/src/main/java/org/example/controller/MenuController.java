@@ -70,15 +70,21 @@ public class MenuController {
                     }
                 break;
 
-            //add an item - The user can add items to the cart as they wish.
+            //add an item - The user can add items to the cart as they wish, but will be warned if they exceed fund amount.
                 case 3: itemsToChooseFrom(displayItems);
                     thisItem = util.promptUserForIntInRange("Select menu item to add:", 1, 8);
                     shoppingCart.customerAddItem(customer, displayItems.get(thisItem - 1));
                     double itemPrice = displayItems.get(thisItem - 1).getPrice();
                     customer.setFundsForDisplay(customer.getFundsForDisplay() - itemPrice);
                     if (customer.getFundsForDisplay() < 0) {
-                        System.out.println("WARNING! You do not have enough $ to complete this purchase.");
-                        // prompt to add money or suggest removing items
+                        System.out.println("WARNING! The total of the list of items exceeds the customer's funds.");
+                        // customer has the option to add more funds after exceeding initial funds amount
+                        boolean addMoney = util.promptUserForYN("Would the customer like to add more funds?");
+                        if (addMoney) {
+                            customerAddsFunds();
+                        } else {
+                            System.out.println("Ok, but some items will need to be removed before Checkout.");
+                        }
                     }
                     break;
 
@@ -101,7 +107,11 @@ public class MenuController {
                             ui.displayMessage("Thank you for your purchase " + customer.getName() + "!");
                             shoppingCart.clearShoppingCart(customer);
                         } else {
-                            ui.displayMessage("You do not have enough funds. Please remove some items from your cart.");
+                            ui.displayMessage("You do not have enough funds to complete transaction.");
+                            boolean addMoney = util.promptUserForYN("Would the customer like to add more funds?");
+                            if (addMoney) {
+                                customerAddsFunds();
+                            }
                         }
                     } else {
                         ui.displayMessage("Ok. Please continue shopping then.");
@@ -121,5 +131,10 @@ public class MenuController {
         for (int i = 0; i < items.size(); i++) {
             System.out.println(i + 1 + ": " + items.get(i));
         }
+    }
+
+    public void customerAddsFunds() {
+        double fundsToAdd = ui.getDouble("How much would they like to add?");
+        customer.customerAddsFunds(fundsToAdd);
     }
 }

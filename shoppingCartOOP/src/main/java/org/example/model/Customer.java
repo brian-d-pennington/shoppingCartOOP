@@ -42,6 +42,11 @@ public class Customer {
         }
     }
 
+    public void customerAddsFunds(double fundsToAdd) {
+        funds += fundsToAdd;
+        fundsToDisplay += fundsToAdd;
+    }
+
     public void updateFundsAfterSale(double checkoutTotal) {
         funds -= checkoutTotal;
         fundsToDisplay = funds;
