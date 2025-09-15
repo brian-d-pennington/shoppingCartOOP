@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.model.Customer;
 import org.example.utils.Util;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,4 +18,6 @@ class ConsoleUITest {
         util = new Util();
         customer = new Customer("Test User", 10.00);
     }
+
+
 }

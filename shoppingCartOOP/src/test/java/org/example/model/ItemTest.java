@@ -44,4 +44,11 @@ public class ItemTest {
         //ASSERT
         assertEquals(expected, itemTest.getName());
     }
+
+    @Test
+    public void toStringTest(){
+        String expected = "testName  $4.00";
+        String actual = itemTest.toString();
+        assertEquals(expected, actual); //ASSERT
+    }
 }
